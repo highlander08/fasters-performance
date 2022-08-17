@@ -1,12 +1,21 @@
-import { Box } from '@mui/material';
+import { Typography } from '@material-ui/core';
+import { Box, List } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useContext } from 'react';
 import Aside from '../components/Aside';
 import CalendarNew from '../components/Calendar';
 import NavBar from '../components/NavBar';
+import DayViewTimeTableCell from '../components/Schedule';
+import { MyContext } from '../hooks/useContext';
+import { useStyles } from '../hooks/useSyles';
+import clock from '../public/images/clock.svg';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
+  const classes = useStyles();
+  const { allEvent, EventFilter } = useContext(MyContext);
+
   return (
     <Box className={styles.container}>
       <Head>
@@ -25,10 +34,73 @@ export default function Home() {
 
       <main className={styles.main}>
         <div className="Calendar">
-        <CalendarNew />
+          <CalendarNew />
         </div>
-        <div className="hoursCalendar">hoursCalendar</div>
-        <div className="nextEvent">nextEvent</div>
+        <div className="hoursCalendar">
+          <DayViewTimeTableCell />
+        </div>
+        <div className="nextEvent" style={{ padding: '20px' }}>
+          <Typography className={classes.TypographyNextEvent}>
+            Next Event
+          </Typography>
+
+          <List
+            sx={{
+              width: '100%',
+              maxWidth: 360,
+              bgcolor: 'background.paper',
+              position: 'relative',
+              overflow: 'auto',
+              maxHeight: 300,
+              '& ul': { padding: 0 },
+            }}
+            subheader={<li />}
+          >
+          
+            {EventFilter
+              ? EventFilter.map((filter) => {
+                  return (
+                    <Box key={filter.titulo} className={classes.BoxNextEvent}>
+                      <Box>
+                        <Typography className={classes.TypographyNextEventUnit}>
+                          {filter.titulo}
+                        </Typography>
+                        <Typography className={classes.TypographyNextEventView}>
+                          {filter.agendaFmtYMD}
+                        </Typography>
+                      </Box>
+                      <Box className={classes.BoxHour}>
+                        <Image src={clock} alt="clock" />
+                        <Typography className={classes.TypographyHour}>
+                           {filter.horasEnd}  - {filter.horas}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  );
+                })
+              : allEvent.map((agenda) => {
+                  return (
+                    <Box key={agenda.titulo}>
+                      <Box>
+                        <Typography className={classes.TypographyNextEventUnit}>
+                          {agenda.titulo}
+                        </Typography>
+                        <Typography className={classes.TypographyNextEventView}>
+                          {agenda.agendaFmtYMD}
+                        </Typography>
+                      </Box>
+                      <Box className={classes.BoxHour}>
+                        <Image src={clock} alt="clock" />
+                        <Typography className={classes.TypographyHour}>
+                        {agenda.horasEnd} - {agenda.horas} 
+                        </Typography>
+                      </Box>
+                    </Box>
+                  );
+                })}
+            
+          </List>
+        </div>
       </main>
     </Box>
   );

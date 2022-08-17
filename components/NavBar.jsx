@@ -1,30 +1,29 @@
-import { Box, Modal, Typography } from "@mui/material";
-import { format } from "date-fns";
-import Image from "next/image";
-import React, { useContext } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { MyContext } from "../hooks/useContext";
-import { useStyles } from "../hooks/useSyles";
-import notification from "../public/images/notification.svg";
-import profileNav from "../public/images/profile-navbar.svg";
-import search from "../public/images/search.svg";
-import styles from "../styles/Home.module.css";
+import { Box, Modal, Typography } from '@mui/material';
+import { format } from 'date-fns';
+import Image from 'next/image';
+import React, { useContext } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { MyContext } from '../hooks/useContext';
+import { useStyles } from '../hooks/useSyles';
+import notification from '../public/images/notification.svg';
+import profileNav from '../public/images/profile-navbar.svg';
+import search from '../public/images/search.svg';
+import styles from '../styles/Home.module.css';
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 500,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
 
 const NavBar = () => {
-  
   const classes = useStyles();
   const {
     allEvent,
@@ -37,19 +36,26 @@ const NavBar = () => {
     valid,
     values,
     setValues,
+    setBusca,
+    busca,
   } = useContext(MyContext);
 
-  console.log(allEvent);
+  console.log('values', values);
+
   const dateFormatAux = (date) => {
     const result = format(date, "MMMM dd ','yyyy");
     return result;
-    
   };
+  // const hourFormatAux = (date) => {
+  //   const result = format(date, 'p');
+  //   return result;
+  // };
 
   const dateFormat = (date) => {
-
     let formatYearMonthDay = dateFormatAux(date);
-    
+
+    // let formatHour = hourFormatAux(date);
+
     let formatISO8601 = new Date(date).toISOString();
 
     return [formatYearMonthDay, formatISO8601];
@@ -58,17 +64,24 @@ const NavBar = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     let agendaYMD = null;
-    let horasYMD = null;
 
     if (values.agendaFmtYMD != null)
       [agendaYMD] = dateFormat(values.agendaFmtYMD);
 
-    if (values.horas != null) [horasYMD] = dateFormat(values.horas);
+    const horasNew = format(values.horas, 'p');
+
+    const horasEndNew = format(values.horasEnd, 'p');
 
     setAllEvent((prev) => [
       ...prev,
-      { ...values, agendaFmtYMD: agendaYMD, horas: horasYMD },
+      {
+        ...values,
+        agendaFmtYMD: agendaYMD,
+        horas: horasNew,
+        horasEnd: horasEndNew,
+      },
     ]);
+    setOpen(false);
   };
 
   return (
@@ -85,22 +98,22 @@ const NavBar = () => {
             <div
               className="form-container"
               style={{
-                width: "360px",
-                backgroundColor: "#2c2c2e",
-                margin: "auto",
+                width: '360px',
+                backgroundColor: '#2c2c2e',
+                margin: 'auto',
                 boxShadow:
-                  "0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)",
-                padding: "10px",
+                  '0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)',
+                padding: '10px',
               }}
             >
               <form
                 className="register-form"
                 onSubmit={handleSubmit}
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-evenly",
-                  padding: "10px",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-evenly',
+                  padding: '10px',
                 }}
               >
                 {submitted && valid ? (
@@ -108,9 +121,9 @@ const NavBar = () => {
                     className="success-message"
                     style={{
                       fontFamily: "'Roboto', sans-serif",
-                      backgroundColor: "#3f89f8",
-                      padding: "15px",
-                      color: "white",
+                      backgroundColor: '#3f89f8',
+                      padding: '15px',
+                      color: 'white',
                     }}
                   >
                     Success! Thank you for registering
@@ -124,12 +137,12 @@ const NavBar = () => {
                   id="Titulo"
                   className={classes.formFieldStyle}
                   style={{
-                    margin: "10px 0 10px 0",
-                    padding: "15px",
-                    fontSize: "16px",
+                    margin: '10px 0 10px 0',
+                    padding: '15px',
+                    fontSize: '16px',
                     border: 0,
                     fontFamily: "'Roboto', sans-serif",
-                    borderRadius: ".25rem",
+                    borderRadius: '.25rem',
                   }}
                   type="text"
                   placeholder="Titulo"
@@ -169,7 +182,31 @@ const NavBar = () => {
                   dateFormat="dd/MM/yyyy"
                   className={classes.formFieldStyle}
                   id="agenda"
-                  placeholderText="agenda"
+                  placeholderText="Data"
+                  //minDate={new Date()}
+                />
+                <DatePicker
+                  selected={values.horasEnd}
+                  onChange={(date) =>
+                    setValues((prev) => ({ ...prev, horasEnd: date }))
+                  }
+                  showTimeSelect
+                  dateFormat="dd/MM/yyyy"
+                  className={classes.formFieldStyle}
+                  id="agenda"
+                  placeholderText="Horario Final"
+                  //minDate={new Date()}
+                />
+                <DatePicker
+                  selected={values.horas}
+                  onChange={(date) =>
+                    setValues((prev) => ({ ...prev, horas: date }))
+                  }
+                  showTimeSelect
+                  dateFormat="dd/MM/yyyy"
+                  className={classes.formFieldStyle}
+                  id="agenda"
+                  placeholderText="Horario Inicial"
                   //minDate={new Date()}
                 />
                 <button
@@ -189,7 +226,7 @@ const NavBar = () => {
         </Modal>
       </div>
       <nav className={styles.nav}>
-        <Box sx={{ m: 4.7, display: "flex" }}>
+        <Box sx={{ m: 4.7, display: 'flex' }}>
           <Box>
             <Typography className={classes.TypographyHeader}>
               Janeiro
@@ -200,30 +237,35 @@ const NavBar = () => {
           </Box>
           <Box className={classes.BoxButton}>
             <button className={classes.ButtonAdd} onClick={handleOpen}>
-              <Typography sx={{ color: "white", padding: "5px" }}>+</Typography>
+              <Typography sx={{ color: 'white', padding: '5px' }}>+</Typography>
 
-              <p style={{ fontSize: "12px" }}>Create Event</p>
+              <p style={{ fontSize: '12px' }}>Create Event</p>
             </button>
           </Box>
           <Box className={classes.BoxSearch}>
-            <Image src={search} alt="search" />{" "}
-            <input type="text" placeholder="Search Task, event, calendar" />
+            <Image src={search} alt="search" />{' '}
+            <input
+              type="text"
+              placeholder="Search Task, event, calendar"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+            />
           </Box>
 
           <Box
             sx={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "16px",
-              gap: "8px",
-              width: "56px",
-              height: "56px",
-              background: "#FAFAFA",
-              borderRadius: "12px",
-              flex: "none",
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '16px',
+              gap: '8px',
+              width: '56px',
+              height: '56px',
+              background: '#FAFAFA',
+              borderRadius: '12px',
+              flex: 'none',
               flexGrow: 0,
-              marginRight: "10px",
+              marginRight: '10px',
             }}
           >
             <Image src={notification} alt="notification" />
@@ -231,18 +273,18 @@ const NavBar = () => {
 
           <Box
             sx={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "16px",
-              gap: "8px",
-              width: "56px",
-              height: "56px",
-              background: "#FAFAFA",
-              borderRadius: "12px",
-              flex: "none",
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '16px',
+              gap: '8px',
+              width: '56px',
+              height: '56px',
+              background: '#FAFAFA',
+              borderRadius: '12px',
+              flex: 'none',
               flexGrow: 0,
-              marginRight: "10px",
+              marginRight: '10px',
             }}
           >
             <Image src={profileNav} alt="profileNav" />

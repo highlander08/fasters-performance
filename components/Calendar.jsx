@@ -8,7 +8,7 @@ import green from "@material-ui/core/colors/green";
 import { ptBR } from "date-fns/locale";
 const theme = createTheme ({
   palette: {
-    primary: { light: green[300], main: green[500], dark: green[700] }
+    primary: {  main: '#EDF6F6' }
   }
 });
 
