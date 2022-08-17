@@ -20,9 +20,13 @@ export default function Home() {
         <link rel="vercel" href="" />
       </Head>
       <Aside />
-      <NavBar/>
+      <NavBar />
 
-      <main className={styles.main}>main</main>
+      <main className={styles.main}>
+        <div className="Calendar">Calendar</div>
+        <div className="hoursCalendar">hoursCalendar</div>
+        <div className="nextEvent">nextEvent</div>
+      </main>
     </Box>
   );
 }

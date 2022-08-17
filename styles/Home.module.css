@@ -28,6 +28,24 @@
 }
 .main {
   grid-area: main;
+  display: grid;
+  grid-template-columns: 22.75rem 1fr;
+  grid-template-rows: 20.5rem 1fr;
+  grid-template-areas:
+    'Calendar hoursCalendar'
+    'nextEvent hoursCalendar'
+}
+
+.Calendar {
+  grid-area: Calendar;
   
+}
+
+.hoursCalendar{
+  grid-area: hoursCalendar;
+}
+
+.nextEvent{
+  grid-area: nextEvent;
 }
 
