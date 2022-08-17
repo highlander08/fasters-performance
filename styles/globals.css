@@ -24,3 +24,21 @@ a {
     background: white;
   }
 }
+input::placeholder {
+  color: #aeaeae;
+}
+input {
+  box-shadow: 0 0 0 0;
+  border: 0 none;
+  outline: 0;
+  color: #aeaeae;
+  background: transparent;
+  width: 100%;
+  margin: 3px
+}
+
+input:focus {
+  box-shadow: 0 0 0 0;
+  border: 0 none;
+  outline: 0;
+}
