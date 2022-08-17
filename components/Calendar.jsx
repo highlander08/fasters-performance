@@ -4,7 +4,6 @@ import { Paper } from "@material-ui/core";
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider, Calendar } from "@material-ui/pickers";
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
-import green from "@material-ui/core/colors/green";
 import { ptBR } from "date-fns/locale";
 const theme = createTheme ({
   palette: {

@@ -1,34 +1,34 @@
 import { useState } from "react";
 
 function useLocalStorage(key, initialValue) {
-  // State to store our value
-  // Pass initial state function to useState so logic is only executed once
+  // Estado para armazenar nosso valor
+  // Passe a função inicial do estado para usar o Estado para que a lógica só seja executada uma vez
   const [storedValue, setStoredValue] = useState(() => {
     try {
-      // Get from local storage by key
+      // Obter do armazenamento local por chave
       const item = window.localStorage.getItem(key);
-      // Parse stored json or if none return initialValue
+      // Parse armazenado json ou se nenhum retorno inicialVava Valor
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      // If error also return initialValue
+      // Se o erro também retornar inicialVassa
       console.log(error);
       return initialValue;
     }
   });
 
-  // Return a wrapped version of useState's setter function that ...
-  // ... persists the new value to localStorage.
+  // Devolva uma versão embrulhada da função de setter do UseState que ...
+  // ... persiste o novo valor para localStorage.
   const setValue = (value) => {
     try {
-      // Allow value to be a function so we have same API as useState
+      // Permitir que o valor seja uma função para que tenhamos a mesma API que useState
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
-      // Save state
+      // salvar para o  estado
       setStoredValue(valueToStore);
-      // Save to local storage
+      // Salvar  para o local storage
       window.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
-      // A more advanced implementation would handle the error case
+      
       console.log(error);
     }
   };

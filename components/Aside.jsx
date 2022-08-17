@@ -1,6 +1,5 @@
 import { Typography, Box, Container } from '@mui/material'
 import React from 'react'
-// import {useStyles} from '../styles/useSyles';
 import styles from '../styles/Home.module.css';
 import Image from 'next/image';
 import image from '../public/images/logo.png';
@@ -23,7 +22,7 @@ const Aside = () => {
     <Container sx={{ m: '3rem' }}>
       <Box className={classes.boxProvider}>
         <Box sx={{ p: 2 }}>
-          <Image alt="Vercel logo" src={image} width={205} height={41} />
+          <Image alt="Fasters logo" src={image} width={205} height={41} />
         </Box>
 
         <Box className={classes.MainBox}>
@@ -54,7 +53,7 @@ const Aside = () => {
           </Typography>
         </Box>
         <Box className={classes.MainBox}>
-          <Image src={people} alt="people" />{' '}
+          <Image src={people} alt="groups" />{' '}
           <Typography className={classes.TypographyBox}>
             Meu Time
           </Typography>
@@ -82,8 +81,6 @@ const Aside = () => {
         </Box>
       </Box>
     </Container>
-
-    {/* {data ? <span>{data.main.temp}</span> : 'calma'} */}
   </aside>
   )
 }
