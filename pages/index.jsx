@@ -69,7 +69,7 @@ export default function Home() {
                           {filter.agendaFmtYMD}
                         </Typography>
                       </Box>
-                      <Box className={classes.BoxHour}>
+                      <Box style={{width: '60%', marginLeft: '70px'}}  className={classes.BoxHour}>
                         <Image src={clock} alt="clock" />
                         <Typography className={classes.TypographyHour}>
                            {filter.horasEnd}  - {filter.horas}
