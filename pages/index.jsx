@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
 import Aside from '../components/Aside';
+import CalendarNew from '../components/Calendar';
 import NavBar from '../components/NavBar';
 import styles from '../styles/Home.module.css';
 
@@ -23,7 +24,9 @@ export default function Home() {
       <NavBar />
 
       <main className={styles.main}>
-        <div className="Calendar">Calendar</div>
+        <div className="Calendar">
+        <CalendarNew />
+        </div>
         <div className="hoursCalendar">hoursCalendar</div>
         <div className="nextEvent">nextEvent</div>
       </main>
