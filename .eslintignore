@@ -1,0 +1,5 @@
+src/registerServiceWorker.tsx
+node_modules/*
+public/*
+build/*
+config/*
