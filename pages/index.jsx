@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
+import Aside from '../components/Aside';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
@@ -17,7 +18,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="vercel" href="" />
       </Head>
-      <aside className={styles.sidebar}>aside</aside>
+      <Aside />
+
       <nav className={styles.nav}>nav</nav>
       <main className={styles.main}>main</main>
     </Box>
